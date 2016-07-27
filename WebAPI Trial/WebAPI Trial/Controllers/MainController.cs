@@ -27,6 +27,13 @@ namespace WebAPI_Trial.Controllers
             return myData.ToString();
         }
 
+        public class ValuesController : ApiController
+        {
+            //can customize response here if needed
+        }
+
+
+
         // POST: api/Main
         public IHttpActionResult Post([FromBody]Something value)
         {

@@ -14,7 +14,8 @@ namespace WebAPI_Trial.Controllers
         // GET: api/Main
         public Something Get()
         {
-            //need to return json somehow here
+            throw new ArgumentNullException("Something");
+            
             return new Something { type = "SomeType", model = "SomeModel", color = "Colour" };
         }
 
@@ -39,6 +40,7 @@ namespace WebAPI_Trial.Controllers
         {
             //forces WebAPI to read a simple type from the request body using the 'FromBody' parameter attribute
             //returns void
+            
             return Ok();
         }
 

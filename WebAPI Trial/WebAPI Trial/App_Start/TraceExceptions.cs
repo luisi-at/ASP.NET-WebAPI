@@ -11,11 +11,16 @@ using System.Threading;
 using System.Net;
 using System.Web.Services;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 
 public class TraceExceptions : ExceptionLogger
 {
     public override void Log(ExceptionLoggerContext context)
     {
         Trace.TraceError(context.ExceptionContext.Exception.ToString());
+        Trace.TraceInformation(context.ExceptionContext.Exception.ToString());
+        
+        Trace.Flush();
+
     }
 }

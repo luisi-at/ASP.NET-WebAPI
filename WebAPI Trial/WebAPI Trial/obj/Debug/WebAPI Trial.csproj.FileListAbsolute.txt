@@ -16,3 +16,4 @@ c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\
 c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\bin\System.Web.Http.WebHost.xml
 c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\obj\Debug\WebAPI Trial.dll
 c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\obj\Debug\WebAPI Trial.pdb
+C:\Users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\obj\Debug\WebAPI Trial.csprojResolveAssemblyReference.cache

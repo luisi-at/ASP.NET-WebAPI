@@ -86,7 +86,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\ErrorHandler.cs" />
+    <Compile Include="App_Start\TraceExceptions.cs" />
+    <Compile Include="App_Start\CentralExceptionHandler.cs" />
     <Compile Include="App_Start\TestHeader.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MainController.cs" />

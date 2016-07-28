@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Net.Http;
-
+using System.Web.Http.ExceptionHandling;
 
 
 
@@ -16,6 +16,10 @@ namespace WebAPI_Trial
         {
             // Web API configuration and services
             config.MessageHandlers.Add(new MessageHandler1());
+            //Central Exception Handler Config
+            config.Services.Replace(typeof(IExceptionHandler), new CentralExceptionHandler());
+            //Central Logging and Trace Config
+            config.Services.Replace(typeof(IExceptionLogger), new TraceExceptions());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

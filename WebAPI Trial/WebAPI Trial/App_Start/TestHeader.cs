@@ -29,7 +29,7 @@ public class MessageHandler1 : DelegatingHandler
         if (request.Headers.Contains("Test-Header")) //can even use this method with user/request body input as just use a variable
         {
             responseValues = request.Headers.GetValues("Test-Header"); //note that this returns an array
-            singleResponse = responseValues.FirstOrDefault().ToString(); //return the first or default value for the header
+            singleResponse = responseValues.FirstOrDefault().ToString(); //return the first or default value for the header in case a null value is received
         }
 
         CallContext.LogicalSetData(myDataString, dataTest);

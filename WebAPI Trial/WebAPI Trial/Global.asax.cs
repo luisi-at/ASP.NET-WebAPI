@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.WebHost;
 using System.Web.Routing;
 using System.Net.Http.Handlers;
+using System.Reflection;
 using Autofac;
 using Autofac.Integration.WebApi;
 using WebAPI_Trial.Controllers;
@@ -19,14 +20,19 @@ namespace WebAPI_Trial
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            //set the autofac stuff
-            var config = new HttpConfiguration();
+
             var builder = new ContainerBuilder();
-            builder.RegisterType<MainController>().InstancePerRequest();
-            //set the dependency resolver
+            var config = GlobalConfiguration.Configuration;
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterWebApiFilterProvider(config);
+
+            //Register custom dependancies for Controller
+            builder.RegisterType<DateOutput>().As<IOutput>().SingleInstance();
+            builder.RegisterType<MainController.TodayDate>().As<IDateWriter>().SingleInstance();
+
+            // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-            
         }
     }
 }

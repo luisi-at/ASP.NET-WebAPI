@@ -14,15 +14,12 @@ namespace WebAPI_Trial.Controllers
 {
     public class MainController : ApiController
     {
-        private readonly IDateWriter _datewriter;
+        private readonly IDateWriter _dateWriter;
         public MainController(IDateWriter datewriter)
         {
-            _datewriter = datewriter;
+            _dateWriter = datewriter;
         }
         //^^^^ This integrates Autofac with WebAPI better than the method seen below not using service locators
-
-        
-
 
         public sealed class TodayDate : IDateWriter
         {
@@ -62,13 +59,15 @@ namespace WebAPI_Trial.Controllers
             //Container = builder.Build();
 
             //Need to figure out how to return the value of the string so it can be output on the http message
-            var myData = WriteDate();
+            //var myData = WriteDate();
+            var myData = _dateWriter.WriteDate();
+
             return myData;
         }
 
         public string WriteDate()
         {
-            ////service locator
+            ////service locator- an anti pattern that is best not used
             //using (var scope = Container.BeginLifetimeScope())
             //{
             //    var writer = scope.Resolve<IDateWriter>();

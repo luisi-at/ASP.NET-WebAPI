@@ -5,6 +5,9 @@ using System.Web.Http;
 using System.Net.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Diagnostics.Tracing;
+using Autofac;
+using Autofac.Integration.WebApi;
+
 
 
 
@@ -21,6 +24,7 @@ namespace WebAPI_Trial
             config.Services.Replace(typeof(IExceptionHandler), new CentralExceptionHandler());
             //Central Logging and Trace Config
             config.Services.Replace(typeof(IExceptionLogger), new TraceExceptions());
+            
             
 
             // Web API routes

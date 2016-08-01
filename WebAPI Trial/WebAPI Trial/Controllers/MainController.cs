@@ -14,12 +14,29 @@ namespace WebAPI_Trial.Controllers
 {
     public class MainController : ApiController
     {
-        //private readonly IDateWriter _datewriter;
-        //public MainController(IDateWriter datewriter)
-        //{
-        //    _datewriter = datewriter;
-        //}
-        //^^^^ This integrates Autofac with WebAPI better than the method seen below
+        private readonly IDateWriter _datewriter;
+        public MainController(IDateWriter datewriter)
+        {
+            _datewriter = datewriter;
+        }
+        //^^^^ This integrates Autofac with WebAPI better than the method seen below not using service locators
+
+        
+
+
+        public sealed class TodayDate : IDateWriter
+        {
+            private IOutput _output;
+            public TodayDate(IOutput output)
+            {
+                this._output = output;
+            }
+            public string WriteDate()
+            {
+                //this._output.Write(DateTime.Today.ToLongDateString());
+                return DateTime.Today.ToLongDateString();
+            }
+        }
 
         private static IContainer Container { get; set; }
         // GET: api/Main
@@ -39,10 +56,10 @@ namespace WebAPI_Trial.Controllers
             //var myData = CallContext.LogicalGetData("DATA");
             
             //use autofac to return todays date here to the http response
-            var builder = new ContainerBuilder();
-            builder.RegisterType<dateOutput>().As<IOutput>();
-            builder.RegisterType<TodayDate>().As<IDateWriter>();
-            Container = builder.Build();
+            //var builder = new ContainerBuilder();
+            //builder.RegisterType<dateOutput>().As<IOutput>();
+            //builder.RegisterType<TodayDate>().As<IDateWriter>();
+            //Container = builder.Build();
 
             //Need to figure out how to return the value of the string so it can be output on the http message
             var myData = WriteDate();
@@ -51,20 +68,19 @@ namespace WebAPI_Trial.Controllers
 
         public string WriteDate()
         {
-            //service locator
-            using (var scope = Container.BeginLifetimeScope())
-            {
-                var writer = scope.Resolve<IDateWriter>();
-                return writer.WriteDate();
-            }
+            ////service locator
+            //using (var scope = Container.BeginLifetimeScope())
+            //{
+            //    var writer = scope.Resolve<IDateWriter>();
+            //    return writer.WriteDate();
+            //}
+            return null;
         }
 
         public class ValuesController : ApiController
         {
             //can customize response here if needed
         }
-
-
 
         // POST: api/Main
         public IHttpActionResult Post([FromBody]Something value)
@@ -112,7 +128,7 @@ namespace WebAPI_Trial.Controllers
         string WriteDate();
     }
 
-    public sealed class dateOutput : IOutput
+    public sealed class DateOutput : IOutput
     {
         public string Write(string content)
         {
@@ -120,17 +136,5 @@ namespace WebAPI_Trial.Controllers
         }
     }
 
-    public sealed class TodayDate : IDateWriter
-    {
-        private IOutput _output;
-        public TodayDate(IOutput output)
-        {
-            this._output = output;
-        }
-        public string WriteDate()
-        {
-            //this._output.Write(DateTime.Today.ToLongDateString());
-            return DateTime.Today.ToLongDateString();
-        }
-    }
+    
 }

@@ -18,3 +18,6 @@ c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\
 c:\users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\obj\Debug\WebAPI Trial.pdb
 C:\Users\aluisi\Documents\Visual Studio 2013\Projects\WebAPI Trial\WebAPI Trial\bin\Autofac.dll
 C:\Users\aluisi\Documents\Visual Studio 2013\Projects\WebAPI Trial\WebAPI Trial\bin\Autofac.xml
+C:\Users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\bin\Autofac.Integration.WebApi.dll
+C:\Users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\bin\Autofac.Integration.WebApi.xml
+C:\Users\aluisi\documents\visual studio 2013\Projects\WebAPI Trial\WebAPI Trial\obj\Debug\WebAPI Trial.csprojResolveAssemblyReference.cache

@@ -6,26 +6,48 @@ using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json;
 using System.Runtime.Remoting.Messaging;
+using Autofac;
+
+//demonstration of WebAPI with Autofac
 
 namespace WebAPI_Trial.Controllers
 {
     public class MainController : ApiController
     {
+        private static IContainer Container { get; set; }
         // GET: api/Main
         public Something Get()
         {
-            throw new ArgumentNullException("Something");
+            //throw new ArgumentNullException("Something");
             
             return new Something { type = "SomeType", model = "SomeModel", color = "Colour" };
         }
 
         // GET: api/Main/5
-        public string Get(int id)
+        public string Get(int id) 
         {
+            
             //CallContext.LogicalSetData("MyData", "Some Data");
             
-            var myData = CallContext.LogicalGetData("DATA");
-            return myData.ToString();
+            //var myData = CallContext.LogicalGetData("DATA");
+            var myData = "";
+            //use autofac to return todays date here to the http response
+            var builder = new ContainerBuilder();
+            builder.RegisterType<TodayDate>().As<IDateWriter>();
+            Container = builder.Build();
+
+            //Need to figure out how to return the value of the string so it can be output on the http message
+            WriteDate();
+            return myData;
+        }
+
+        public void WriteDate()
+        {
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                var writer = scope.Resolve<IDateWriter>();
+                writer.WriteDate();
+            }
         }
 
         public class ValuesController : ApiController
@@ -64,5 +86,43 @@ namespace WebAPI_Trial.Controllers
         public string type { get; set; }
         public string model { get; set; }
         public string color { get; set; }
+    }
+
+    //------------------------
+    //Autofac stuff
+    //------------------------
+
+    public interface IOutput
+    {
+        //prototype the output functions here under this interface
+        void Write(string content);
+    }
+
+    public interface IDateWriter
+    {
+        void WriteDate();
+    }
+
+    public sealed class TodayDate : IDateWriter
+    {
+        private IOutput _output;
+        public TodayDate(IOutput output)
+        {
+            this._output = output;
+        }
+        public void WriteDate()
+        {
+            this._output.Write(DateTime.Today.ToLongDateString());
+        }
+    }
+    
+    public sealed class myDateOuput : IOutput
+    {
+        public void Write(string content)
+        {
+           //need to return the value when this is called
+           //alternatively set the values here
+           
+        }
     }
 }

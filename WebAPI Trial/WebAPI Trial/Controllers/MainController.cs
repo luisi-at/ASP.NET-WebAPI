@@ -14,6 +14,13 @@ namespace WebAPI_Trial.Controllers
 {
     public class MainController : ApiController
     {
+        //private readonly IDateWriter _datewriter;
+        //public MainController(IDateWriter datewriter)
+        //{
+        //    _datewriter = datewriter;
+        //}
+        //^^^^ This integrates Autofac with WebAPI better than the method seen below
+
         private static IContainer Container { get; set; }
         // GET: api/Main
         public Something Get()
@@ -30,23 +37,25 @@ namespace WebAPI_Trial.Controllers
             //CallContext.LogicalSetData("MyData", "Some Data");
             
             //var myData = CallContext.LogicalGetData("DATA");
-            var myData = "";
+            
             //use autofac to return todays date here to the http response
             var builder = new ContainerBuilder();
+            builder.RegisterType<dateOutput>().As<IOutput>();
             builder.RegisterType<TodayDate>().As<IDateWriter>();
             Container = builder.Build();
 
             //Need to figure out how to return the value of the string so it can be output on the http message
-            WriteDate();
+            var myData = WriteDate();
             return myData;
         }
 
-        public void WriteDate()
+        public string WriteDate()
         {
+            //service locator
             using (var scope = Container.BeginLifetimeScope())
             {
                 var writer = scope.Resolve<IDateWriter>();
-                writer.WriteDate();
+                return writer.WriteDate();
             }
         }
 
@@ -95,12 +104,20 @@ namespace WebAPI_Trial.Controllers
     public interface IOutput
     {
         //prototype the output functions here under this interface
-        void Write(string content);
+        string Write(string content);
     }
 
     public interface IDateWriter
     {
-        void WriteDate();
+        string WriteDate();
+    }
+
+    public sealed class dateOutput : IOutput
+    {
+        public string Write(string content)
+        {
+            return content;
+        }
     }
 
     public sealed class TodayDate : IDateWriter
@@ -110,19 +127,10 @@ namespace WebAPI_Trial.Controllers
         {
             this._output = output;
         }
-        public void WriteDate()
+        public string WriteDate()
         {
-            this._output.Write(DateTime.Today.ToLongDateString());
-        }
-    }
-    
-    public sealed class myDateOuput : IOutput
-    {
-        public void Write(string content)
-        {
-           //need to return the value when this is called
-           //alternatively set the values here
-           
+            //this._output.Write(DateTime.Today.ToLongDateString());
+            return DateTime.Today.ToLongDateString();
         }
     }
 }

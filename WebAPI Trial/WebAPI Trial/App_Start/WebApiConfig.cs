@@ -25,8 +25,6 @@ namespace WebAPI_Trial
             //Central Logging and Trace Config
             config.Services.Replace(typeof(IExceptionLogger), new TraceExceptions());
             
-            
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 

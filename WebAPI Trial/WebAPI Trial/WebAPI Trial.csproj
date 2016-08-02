@@ -99,7 +99,12 @@
     <Compile Include="App_Start\CentralExceptionHandler.cs" />
     <Compile Include="App_Start\TestHeader.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DateOutput.cs" />
+    <Compile Include="Interfaces\IDateWriter.cs" />
+    <Compile Include="Interfaces\IOutput.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\Something.cs" />
+    <Compile Include="Controllers\TodayDate.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

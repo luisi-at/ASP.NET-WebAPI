@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Reflection;
 using System.Web.Http;
-using System.Web.Http.WebHost;
-using System.Web.Routing;
-using System.Net.Http.Handlers;
-using System.Reflection;
 using Autofac;
 using Autofac.Integration.WebApi;
-using WebAPI_Trial.Controllers;
-
-
+using WebAPI_Trial.Misc_Classes;
+using WebAPI_Trial.Misc_Classes;
+using WebAPI_Trial.Interfaces;
 
 namespace WebAPI_Trial
 {
@@ -27,8 +20,9 @@ namespace WebAPI_Trial
             builder.RegisterWebApiFilterProvider(config);
 
             //Register custom dependancies for Controller
-            builder.RegisterType<DateOutput>().As<IOutput>().SingleInstance();
-            builder.RegisterType<MainController.TodayDate>().As<IDateWriter>().SingleInstance();
+            builder.RegisterType<DateOutput>().As<IOutput>().InstancePerLifetimeScope();
+            //builder.RegisterType<TodayDate>().As<IDateWriter>().InstancePerLifetimeScope();
+            builder.RegisterType<EpochDate>().As<IDateWriter>().InstancePerLifetimeScope();
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
